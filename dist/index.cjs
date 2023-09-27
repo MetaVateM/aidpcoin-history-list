@@ -9,9 +9,9 @@ $parcel$defineInteropFlag(module.exports);
 
 $parcel$export(module.exports, "getHistory", () => $80bd448eb6ea085b$export$f9582a3c130d9538);
 $parcel$export(module.exports, "default", () => $80bd448eb6ea085b$export$2e2bcd8739ae039);
-function $80bd448eb6ea085b$export$f9582a3c130d9538(deltas) {
+function $80bd448eb6ea085b$export$f9582a3c130d9538(deltas, baseCurrency = "RVN") {
     const deltasByTransactionId = $80bd448eb6ea085b$var$getDeltasMappedToTransactionId(deltas);
-    const history = Array.from(deltasByTransactionId.values()).map($80bd448eb6ea085b$var$getListItem);
+    const history = Array.from(deltasByTransactionId.values()).map((obj)=>$80bd448eb6ea085b$var$getListItem(obj, baseCurrency));
     history.sort((h1, h2)=>{
         //Sort on blockheight AND transaction, you can send multiple transaction in the same block
         const value1 = h1.blockHeight + "_" + h1.transactionId;
@@ -25,7 +25,7 @@ function $80bd448eb6ea085b$export$f9582a3c130d9538(deltas) {
 /**
  *
  * @param deltas Address deltas from the same transaction
- */ function $80bd448eb6ea085b$var$getListItem(deltas) {
+ */ function $80bd448eb6ea085b$var$getListItem(deltas, baseCurrency = "RVN") {
     //Very simple if only one delta, like you received two LEMONADE tokens
     if (deltas.length === 1) {
         const delta = deltas[0];
@@ -49,8 +49,8 @@ function $80bd448eb6ea085b$export$f9582a3c130d9538(deltas) {
             balanceByAsset[delta.assetName] = balanceByAsset[delta.assetName] || 0;
             balanceByAsset[delta.assetName] += delta.satoshis;
         });
-        const fee = $80bd448eb6ea085b$var$getRavencoinTransactionFee(deltas);
-        if (fee > 0) balanceByAsset["RVN"] -= fee;
+        const fee = $80bd448eb6ea085b$var$getBaseCurrencyFee(deltas, baseCurrency);
+        if (fee > 0) balanceByAsset[baseCurrency] -= fee;
         let isSent = false;
         let assets = Object.keys(balanceByAsset).map((name)=>{
             //If any of the values are negative, it means we have sent
@@ -96,7 +96,7 @@ function $80bd448eb6ea085b$var$getDeltasMappedToTransactionId(deltas) {
 var $80bd448eb6ea085b$export$2e2bcd8739ae039 = {
     getHistory: $80bd448eb6ea085b$export$f9582a3c130d9538
 };
-function $80bd448eb6ea085b$var$getRavencoinTransactionFee(deltas) {
+function $80bd448eb6ea085b$var$getBaseCurrencyFee(deltas, baseCurrency = "RVN") {
     //We currently do not support calculation of fee.
     //Why? because we need to get the full transaction to get the fee
     return 0;
