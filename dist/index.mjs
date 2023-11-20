@@ -52,14 +52,14 @@ function $c3f6c693698dc7cd$export$f9582a3c130d9538(deltas, baseCurrency = "RVN")
             return obj;
         });
         //Did we transfer asset (not RVN)
-        const containsAssets = !!assets.find((asset)=>asset.assetName !== "RVN");
+        const containsAssets = !!assets.find((asset)=>asset.assetName !== baseCurrency);
         const hasSentAssets = isSent && containsAssets === true;
         //OK we have transfered assets
         //If we find RVN transferes less than 5 RVN, assume it is the miners fee
         //Sure, technically you can send 4 RVN and 1 LEMONADE in the same transaction but that is exceptional
         //@ts-ignore
         if (hasSentAssets === true) assets = assets.filter((asset)=>{
-            if (asset.assetName === "RVN" && asset.value < 5) return false;
+            if (asset.assetName === baseCurrency && asset.value < 5) return false;
             return true;
         });
         const listItem = {

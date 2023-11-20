@@ -73,7 +73,9 @@ function getListItem(deltas: IDelta[], baseCurrency = "RVN"): IHistoryItem {
     });
 
     //Did we transfer asset (not RVN)
-    const containsAssets = !!assets.find((asset) => asset.assetName !== "RVN");
+    const containsAssets = !!assets.find(
+      (asset) => asset.assetName !== baseCurrency
+    );
 
     const hasSentAssets = isSent && containsAssets === true;
 
@@ -84,7 +86,7 @@ function getListItem(deltas: IDelta[], baseCurrency = "RVN"): IHistoryItem {
     //@ts-ignore
     if (hasSentAssets === true) {
       assets = assets.filter((asset) => {
-        if (asset.assetName === "RVN" && asset.value < 5) {
+        if (asset.assetName === baseCurrency && asset.value < 5) {
           return false;
         }
         return true;
