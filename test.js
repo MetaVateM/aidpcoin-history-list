@@ -1,4 +1,4 @@
-const History = require("../ravencoin-history-list"); //Yes we are importing our self
+const History = require("../aidpcoin-history-list"); //Yes we are importing our self
 const aliceDeltas = require("./example/alice_deltas_after_sending.json");
 const evrDeltas = require("./example/evr_deltas.json");
 test("Check sent one LEMONADE", () => {
@@ -12,8 +12,8 @@ test("Check sent one LEMONADE", () => {
   expect(lemonade).toBeTruthy();
   expect(lemonade.value).toBe(-1);
 
-  const rvn = historyItem.assets.find((a) => a.assetName === "RVN");
-  expect(rvn).toBeFalsy();
+  const aidp = historyItem.assets.find((a) => a.assetName === "AIDP");
+  expect(aidp).toBeFalsy();
   return;
 });
 
@@ -31,7 +31,7 @@ test("CheckEVR", () => {
   expect(evr).toBeTruthy();
   expect(evr.value).toBe(-1.01);
 
-  const rvn = historyItem.assets.find((a) => a.assetName === "RVN");
-  expect(rvn).toBeFalsy();
+  const aidp = historyItem.assets.find((a) => a.assetName === "AIDP");
+  expect(aidp).toBeFalsy();
   return;
 });

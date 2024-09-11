@@ -1,4 +1,4 @@
-function $c3f6c693698dc7cd$export$f9582a3c130d9538(deltas, baseCurrency = "RVN") {
+function $c3f6c693698dc7cd$export$f9582a3c130d9538(deltas, baseCurrency = "AIDP") {
     const deltasByTransactionId = $c3f6c693698dc7cd$var$getDeltasMappedToTransactionId(deltas);
     const history = Array.from(deltasByTransactionId.values()).map((obj)=>$c3f6c693698dc7cd$var$getListItem(obj, baseCurrency));
     history.sort((h1, h2)=>{
@@ -14,7 +14,7 @@ function $c3f6c693698dc7cd$export$f9582a3c130d9538(deltas, baseCurrency = "RVN")
 /**
  *
  * @param deltas Address deltas from the same transaction
- */ function $c3f6c693698dc7cd$var$getListItem(deltas, baseCurrency = "RVN") {
+ */ function $c3f6c693698dc7cd$var$getListItem(deltas, baseCurrency = "AIDP") {
     //Very simple if only one delta, like you received two LEMONADE tokens
     if (deltas.length === 1) {
         const delta = deltas[0];
@@ -51,12 +51,12 @@ function $c3f6c693698dc7cd$export$f9582a3c130d9538(deltas, baseCurrency = "RVN")
             };
             return obj;
         });
-        //Did we transfer asset (not RVN)
+        //Did we transfer asset (not AIDP)
         const containsAssets = !!assets.find((asset)=>asset.assetName !== baseCurrency);
         const hasSentAssets = isSent && containsAssets === true;
         //OK we have transfered assets
-        //If we find RVN transferes less than 5 RVN, assume it is the miners fee
-        //Sure, technically you can send 4 RVN and 1 LEMONADE in the same transaction but that is exceptional
+        //If we find AIDP transferes less than 5 AIDP, assume it is the miners fee
+        //Sure, technically you can send 4 AIDP and 1 LEMONADE in the same transaction but that is exceptional
         //@ts-ignore
         if (hasSentAssets === true) assets = assets.filter((asset)=>{
             if (asset.assetName === baseCurrency && asset.value < 5) return false;
@@ -85,12 +85,12 @@ function $c3f6c693698dc7cd$var$getDeltasMappedToTransactionId(deltas) {
 var $c3f6c693698dc7cd$export$2e2bcd8739ae039 = {
     getHistory: $c3f6c693698dc7cd$export$f9582a3c130d9538
 };
-function $c3f6c693698dc7cd$var$getBaseCurrencyFee(deltas, baseCurrency = "RVN") {
+function $c3f6c693698dc7cd$var$getBaseCurrencyFee(deltas, baseCurrency = "AIDP") {
     //We currently do not support calculation of fee.
     //Why? because we need to get the full transaction to get the fee
     return 0;
 /*
-  //Check all inputed RVN and match with outputted RVN
+  //Check all inputed AIDP and match with outputted AIDP
   //The diff is the tansaction fee.
 
   //this only applies to SENT transactions
@@ -98,9 +98,9 @@ function $c3f6c693698dc7cd$var$getBaseCurrencyFee(deltas, baseCurrency = "RVN") 
   let inputted = 0;
   let outputted = 0;
 
-  //It is sent if we have a RVN transfer that is negative
+  //It is sent if we have a AIDP transfer that is negative
   const isSent = !!deltas.find(
-    (delta) => delta.assetName === "RVN" && delta.satoshis < 0
+    (delta) => delta.assetName === "AIDP" && delta.satoshis < 0
   );
 
   if (isSent === true) {
@@ -111,7 +111,7 @@ function $c3f6c693698dc7cd$var$getBaseCurrencyFee(deltas, baseCurrency = "RVN") 
   }
 
   for (let delta of deltas) {
-    if (delta.assetName === "RVN") {
+    if (delta.assetName === "AIDP") {
       if (delta.satoshis < 0) {
         inputted = inputted + delta.satoshis;
       } else if (delta.satoshis > 0) {

@@ -1,6 +1,6 @@
 export function getHistory(
   deltas: IDelta[],
-  baseCurrency = "RVN"
+  baseCurrency = "AIDP"
 ): IHistoryItem[] {
   const deltasByTransactionId = getDeltasMappedToTransactionId(deltas);
   const history = Array.from(deltasByTransactionId.values()).map((obj) =>
@@ -26,7 +26,7 @@ export function getHistory(
  *
  * @param deltas Address deltas from the same transaction
  */
-function getListItem(deltas: IDelta[], baseCurrency = "RVN"): IHistoryItem {
+function getListItem(deltas: IDelta[], baseCurrency = "AIDP"): IHistoryItem {
   //Very simple if only one delta, like you received two LEMONADE tokens
   if (deltas.length === 1) {
     const delta = deltas[0];
@@ -72,7 +72,7 @@ function getListItem(deltas: IDelta[], baseCurrency = "RVN"): IHistoryItem {
       return obj;
     });
 
-    //Did we transfer asset (not RVN)
+    //Did we transfer asset (not AIDP)
     const containsAssets = !!assets.find(
       (asset) => asset.assetName !== baseCurrency
     );
@@ -80,8 +80,8 @@ function getListItem(deltas: IDelta[], baseCurrency = "RVN"): IHistoryItem {
     const hasSentAssets = isSent && containsAssets === true;
 
     //OK we have transfered assets
-    //If we find RVN transferes less than 5 RVN, assume it is the miners fee
-    //Sure, technically you can send 4 RVN and 1 LEMONADE in the same transaction but that is exceptional
+    //If we find AIDP transferes less than 5 AIDP, assume it is the miners fee
+    //Sure, technically you can send 4 AIDP and 1 LEMONADE in the same transaction but that is exceptional
 
     //@ts-ignore
     if (hasSentAssets === true) {
@@ -140,12 +140,12 @@ export default {
   getHistory,
 };
 
-function getBaseCurrencyFee(deltas: IDelta[], baseCurrency = "RVN"): number {
+function getBaseCurrencyFee(deltas: IDelta[], baseCurrency = "AIDP"): number {
   //We currently do not support calculation of fee.
   //Why? because we need to get the full transaction to get the fee
   return 0;
   /*
-  //Check all inputed RVN and match with outputted RVN
+  //Check all inputed AIDP and match with outputted AIDP
   //The diff is the tansaction fee.
 
   //this only applies to SENT transactions
@@ -153,9 +153,9 @@ function getBaseCurrencyFee(deltas: IDelta[], baseCurrency = "RVN"): number {
   let inputted = 0;
   let outputted = 0;
 
-  //It is sent if we have a RVN transfer that is negative
+  //It is sent if we have a AIDP transfer that is negative
   const isSent = !!deltas.find(
-    (delta) => delta.assetName === "RVN" && delta.satoshis < 0
+    (delta) => delta.assetName === "AIDP" && delta.satoshis < 0
   );
 
   if (isSent === true) {
@@ -166,7 +166,7 @@ function getBaseCurrencyFee(deltas: IDelta[], baseCurrency = "RVN"): number {
   }
 
   for (let delta of deltas) {
-    if (delta.assetName === "RVN") {
+    if (delta.assetName === "AIDP") {
       if (delta.satoshis < 0) {
         inputted = inputted + delta.satoshis;
       } else if (delta.satoshis > 0) {

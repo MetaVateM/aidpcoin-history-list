@@ -1,5 +1,5 @@
 {
-  "name": "@ravenrebels/ravencoin-history-list",
+  "name": "@metavatem/aidpcoin-history-list",
   "version": "1.2.4",
   "description": "A human understandable list of in or outgoing transactions",
   "source": "index.ts",
@@ -17,15 +17,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ravenrebels/ravencoin-history-list.git"
+    "url": "git+https://github.com/metavatem/aidpcoin-history-list.git"
   },
   "keywords": [
-    "Ravencoin"
+    "Aidpcoin"
   ],
   "author": "Raven Rebels / Dick Henrik Larsson",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ravenrebels/ravencoin-history-list/issues"
+    "url": "https://github.com/metavatem/aidpcoin-history-list/issues"
   },
   "devDependencies": {
     "@parcel/packager-ts": "^2.8.3",
@@ -34,5 +34,5 @@
     "parcel": "^2.9.3",
     "typescript": "^4.9.4"
   },
-  "homepage": "https://github.com/ravenrebels/ravencoin-history-list#readme"
+  "homepage": "https://github.com/metavatem/aidpcoin-history-list#readme"
 }
